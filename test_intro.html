@@ -55,7 +55,7 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
     img.style.top = '50%';
     img.style.transform = 'translate(-50%, -50%)';
     
-    if ((window.screen.width < window.screen.height || screen.width < screen.height) 
+    if ((window.screen.width < window.screen.height || screen.width < screen.height || window.orientation == 90 || window.orientation == -90) 
         && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
         img.setAttribute('src', zdk_portraitImgUrl);
     } else {
