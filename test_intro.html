@@ -1,0 +1,135 @@
+<html>
+
+<body style="margin: 0; height: 20000px; overflow: auto;">
+    <span style="margin: 50px">TEST INTRO</span>
+
+    <script>
+
+        var zdk_landscapeImgUrl = 'https://via.placeholder.com/700X350';
+        var zdk_portraitImgUrl = 'https://via.placeholder.com/350x700';
+        var zdk_clickUrl = 'http://www.google.it';
+        var zdk_bandRGBColor = '255,255,100';
+        var zdk_bandOpacity = '5'; // must be an integer between 0 and 10
+        var zdk_closingTimeout = '50000'
+        var zdk_bandZIndex = '1000';
+        var zdk_thirdPartyImpressionTracker = '';
+
+        var zdk_myScript = document.createElement('script');
+        zdk_myScript.type = 'text/javascript';
+        zdk_myScript.text = `
+        var d = window.top.document;
+var body = d.getElementsByTagName('body')[0];
+var originalBodyOverflow = body.style.overflow;
+body.style.overflow = 'hidden';
+
+var backgroundDiv = createBackgroudDiv();
+body.appendChild(backgroundDiv); 
+var creativeImage = createCreativeImage(body, backgroundDiv);
+backgroundDiv.appendChild(creativeImage); 
+setTimeout(function() {closePopUp(body, backgroundDiv)}, zdk_closingTimeout);
+setTrackerPixel();
+
+function createBackgroudDiv() {
+    var backgroundDiv = d.createElement('div');
+    backgroundDiv.setAttribute('id', 'backgroundDiv');
+    backgroundDiv.style.background = 'rgba(' + zdk_bandRGBColor + ',' + (zdk_bandOpacity / 10) + ')';
+    backgroundDiv.style.width = '100%';
+    backgroundDiv.style.height = '100%';
+    backgroundDiv.style.position = 'fixed';
+    backgroundDiv.style.top = '0';
+    backgroundDiv.style.zIndex = zdk_bandZIndex;
+    backgroundDiv.style.textAlign = 'center';
+    return backgroundDiv;
+}
+
+function createCreativeImage(body, backgroundDiv, creativeDiv) {
+    var link = d.createElement('a');
+    link.setAttribute('id', 'link');
+	link.href = zdk_clickUrl;
+    link.setAttribute('target', '_blank');
+	var img = d.createElement('img');
+    img.setAttribute('id', 'img');
+
+    img.style.position = 'absolute';
+    img.style.left = '50%';
+    img.style.top = '50%';
+    img.style.transform = 'translate(-50%, -50%)';
+    
+    if ((window.screen.width < window.screen.height || screen.width < screen.height) 
+        && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
+        img.setAttribute('src', zdk_portraitImgUrl);
+    } else {
+        img.setAttribute('src', zdk_landscapeImgUrl);
+    }
+    img.style.cursor = 'pointer';
+    img.onload = function () {
+        if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
+            img.style.width = '100%';
+        } else {
+            img.style.height = '100%';
+        }
+		var closeButton = createCloseButton(body, backgroundDiv, img);
+		backgroundDiv.appendChild(closeButton);
+	};
+    link.appendChild(img);
+	return link;
+}
+
+function createCloseButton(body, backgroundDiv, img) {
+	var closeButton = d.createElement('div');
+    closeButton.setAttribute('id', 'closeButton');
+	closeButton.style.float = 'left';
+    closeButton.style.position = 'absolute';
+    let diffW = ((backgroundDiv.offsetWidth - img.offsetWidth) / 2);
+    diffW = diffW < 0 ? 0 : diffW;
+    var rightMargin = diffW + 13;
+    closeButton.style.right = rightMargin + 'px';
+    let diffH = ((backgroundDiv.offsetHeight - img.offsetHeight) / 2);
+    diffH = diffH < 0 ? 0 : diffH;
+    var topMargin = diffH + 13;
+	closeButton.style.top = topMargin + 'px';
+	closeButton.style.cursor = 'pointer';
+	closeButton.style.color = '#fff';
+	closeButton.style.border = '1px solid #AEAEAE';
+	closeButton.style.borderRadius = '100px';
+	closeButton.style.background = '#605F61';
+	closeButton.style.fontSize = '31px';
+	closeButton.style.lineHeight = '0px';
+	closeButton.style.padding = '11px 3px';
+	closeButton.innerHTML = '×';
+    closeButton.addEventListener("click", function() {closePopUp(body, backgroundDiv)});
+	return closeButton;
+}
+
+function closePopUp(body, backgroundDiv) {
+    if (body.contains(backgroundDiv)) {
+        body.style.overflow = originalBodyOverflow;
+        body.removeChild(backgroundDiv);
+    }
+}
+
+function setTrackerPixel() {
+	if (zdk_thirdPartyImpressionTracker && zdk_thirdPartyImpressionTracker.indexOf("http") == 0) {
+		let div = d.createElement('div');
+		div.style.position = 'absolute';
+		div.style.top = '0px';
+		div.style.right = '0px';
+		div.style.width = '1px';
+		div.style.height = '1px';
+		div.style.backgroundColor = 'transparent';
+		body.appendChild(div);
+		let img = d.createElement('img');
+		img.setAttribute('src', zdk_thirdPartyImpressionTracker);
+		img.height = '1px';
+		img.width = '1px';
+		img.style.height = '1px !important';
+		img.style.width = '1px !important';
+		div.appendChild(img);
+	}
+}
+    `
+        document.head.appendChild(zdk_myScript);
+    </script>
+</body>
+
+</html>
