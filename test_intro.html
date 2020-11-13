@@ -55,7 +55,7 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
     img.style.top = '50%';
     img.style.transform = 'translate(-50%, -50%)';
     
-    if ((window.innerWidth < window.innerHeight || (window.orientation == 0 || window.orientation == 180)) && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
+    if ((window.innerWidth < window.innerHeight || window.orientation == 0 || window.orientation == 180) && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
         img.setAttribute('src', zdk_portraitImgUrl);
     } else {
         img.setAttribute('src', zdk_landscapeImgUrl);
