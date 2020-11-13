@@ -6,7 +6,7 @@
     <script>
 
         var zdk_landscapeImgUrl = 'https://via.placeholder.com/300x250';
-        // var zdk_portraitImgUrl = 'https://via.placeholder.com/350x700';
+        var zdk_portraitImgUrl = '';
         var zdk_clickUrl = 'http://www.google.it';
         var zdk_bandRGBColor = '255,255,100';
         var zdk_bandOpacity = '5'; // must be an integer between 0 and 10
@@ -55,18 +55,13 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
     img.style.top = '50%';
     img.style.transform = 'translate(-50%, -50%)';
     
-    if (isPortraitMode() && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
+    if ((window.innerWidth < window.innerHeight || (window.orientation == 0 || window.orientation == 180)) && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
         img.setAttribute('src', zdk_portraitImgUrl);
     } else {
         img.setAttribute('src', zdk_landscapeImgUrl);
     }
     img.style.cursor = 'pointer';
     img.onload = function () {
-        console.log(img.offsetWidth);
-        console.log(img.offsetHeight);
-        console.log(window.screen.width);
-        console.log(window.screen.height);
-        // if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
         if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
             img.style.width = '100%';
         } else {
@@ -77,10 +72,6 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
 	};
     link.appendChild(img);
 	return link;
-}
-
-function isPortraitMode() {
-    return (window.screen.width < window.screen.height && screen.width < screen.height && (window.orientation == 0 || window.orientation == 180))
 }
 
 function createCloseButton(body, backgroundDiv, img) {
