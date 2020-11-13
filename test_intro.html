@@ -68,9 +68,9 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
         console.log(window.screen.height);
         // if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
         if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
-            img.style.width = '100vw';
+            img.style.width = '100%';
         } else {
-            img.style.height = '100vh';
+            img.style.height = '100%';
         }
 		var closeButton = createCloseButton(body, backgroundDiv, img);
 		backgroundDiv.appendChild(closeButton);
