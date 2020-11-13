@@ -63,6 +63,10 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
     }
     img.style.cursor = 'pointer';
     img.onload = function () {
+        console.log(img.offsetWidth);
+        console.log(img.offsetHeight);
+        console.log(window.screen.width);
+        console.log(window.screen.height);
         if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
             img.style.width = '100%';
         } else {
