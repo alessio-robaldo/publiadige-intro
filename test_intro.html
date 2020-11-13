@@ -67,7 +67,7 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
         console.log(window.screen.width);
         console.log(window.screen.height);
         // if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
-        if (img.offsetWidth/img.offsetHeight > window.innerHeight/window.innerWidth) {
+        if (img.offsetWidth/img.offsetHeight > window.innerWidth/window.innerHeight) {
             img.style.width = '100vw';
         } else {
             img.style.height = '100vh';
