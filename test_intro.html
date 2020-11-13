@@ -55,8 +55,7 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
     img.style.top = '50%';
     img.style.transform = 'translate(-50%, -50%)';
     
-    if ((window.screen.width < window.screen.height && screen.width < screen.height && (window.orientation == 0 || window.orientation == 180)) 
-        && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
+    if (isPortraitMode() && zdk_portraitImgUrl && zdk_portraitImgUrl.length > 0) {
         img.setAttribute('src', zdk_portraitImgUrl);
     } else {
         img.setAttribute('src', zdk_landscapeImgUrl);
@@ -67,16 +66,21 @@ function createCreativeImage(body, backgroundDiv, creativeDiv) {
         console.log(img.offsetHeight);
         console.log(window.screen.width);
         console.log(window.screen.height);
-        if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
-            img.style.width = '100%';
+        // if (img.offsetWidth/img.offsetHeight > window.screen.width/window.screen.height) {
+        if (img.offsetWidth/img.offsetHeight > window.innerHeight/window.innerWidth) {
+            img.style.width = '100vw';
         } else {
-            img.style.height = '100%';
+            img.style.height = '100vh';
         }
 		var closeButton = createCloseButton(body, backgroundDiv, img);
 		backgroundDiv.appendChild(closeButton);
 	};
     link.appendChild(img);
 	return link;
+}
+
+function isPortraitMode() {
+    return (window.screen.width < window.screen.height && screen.width < screen.height && (window.orientation == 0 || window.orientation == 180))
 }
 
 function createCloseButton(body, backgroundDiv, img) {
